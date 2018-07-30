@@ -4,7 +4,7 @@ using System.IO;
 
 class Example0
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -24,7 +24,7 @@ class Example0
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -34,14 +34,14 @@ class Example0
             return;
         }
 
-        List<ArthikaHFT.accountTick> accountTickList = wrapper.getAccount();
-        foreach (ArthikaHFT.accountTick tick in accountTickList)
+        List<AdharaHFT.accountTick> accountTickList = wrapper.getAccount();
+        foreach (AdharaHFT.accountTick tick in accountTickList)
         {
             Console.WriteLine("Name: " + tick.name + " Style: " + tick.style + " Leverage: " + tick.leverage);
         }
 
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
-        foreach (ArthikaHFT.tinterfaceTick tick in tinterfaceTickList)
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        foreach (AdharaHFT.tinterfaceTick tick in tinterfaceTickList)
         {
             Console.WriteLine("Name: " + tick.name + " Account: " + tick.account + " Commissions: " + tick.commissions);
         }

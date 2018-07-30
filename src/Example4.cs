@@ -4,7 +4,7 @@ using System.IO;
 
 class Example4
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -24,7 +24,7 @@ class Example4
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -37,16 +37,16 @@ class Example4
         // POSITION POLLING
 
         // get accounts
-        List<ArthikaHFT.accountTick> accountTickList = wrapper.getAccount();
+        List<AdharaHFT.accountTick> accountTickList = wrapper.getAccount();
 
         Console.WriteLine("Starting Polling1");
-        ArthikaHFT.positionTick positionTickList1 = wrapper.getPosition(null, new List<string> { "EUR/USD", "GBP/JPY", "GBP/USD" }, null);
+        AdharaHFT.positionTick positionTickList1 = wrapper.getPosition(null, new List<string> { "EUR/USD", "GBP/JPY", "GBP/USD" }, null);
         Console.WriteLine("StrategyPL: " + positionTickList1.accountingTick.strategyPL + " TotalEquity: " + positionTickList1.accountingTick.totalequity + " UsedMargin: " + positionTickList1.accountingTick.usedmargin + " FreeMargin: " + positionTickList1.accountingTick.freemargin);
-        foreach (ArthikaHFT.assetPositionTick tick in positionTickList1.assetPositionTickList)
+        foreach (AdharaHFT.assetPositionTick tick in positionTickList1.assetPositionTickList)
         {
             Console.WriteLine("Asset: " + tick.asset + " Account: " + tick.account + " Exposure: " + tick.exposure + " TotalRisk: " + tick.totalrisk);
         }
-        foreach (ArthikaHFT.securityPositionTick tick in positionTickList1.securityPositionTickList)
+        foreach (AdharaHFT.securityPositionTick tick in positionTickList1.securityPositionTickList)
         {
             Console.WriteLine("Security: " + tick.security + " Account: " + tick.account + " Equity: " + tick.equity + " Exposure: " + tick.exposure + " Price: " + tick.price.ToString("F" + tick.pips) + " Pips: " + tick.pips);
         }
@@ -60,13 +60,13 @@ class Example4
             accountlist.Add(accountTickList[0].name);
             accountlist.Add(accountTickList[1].name);
         }
-        ArthikaHFT.positionTick positionTickList2 = wrapper.getPosition(new List<string> { "EUR", "GBP", "JPY", "USD" }, null, accountlist);
+        AdharaHFT.positionTick positionTickList2 = wrapper.getPosition(new List<string> { "EUR", "GBP", "JPY", "USD" }, null, accountlist);
         Console.WriteLine("StrategyPL: " + positionTickList2.accountingTick.strategyPL + " TotalEquity: " + positionTickList2.accountingTick.totalequity + " UsedMargin: " + positionTickList2.accountingTick.usedmargin + " FreeMargin: " + positionTickList2.accountingTick.freemargin);
-        foreach (ArthikaHFT.assetPositionTick tick in positionTickList2.assetPositionTickList)
+        foreach (AdharaHFT.assetPositionTick tick in positionTickList2.assetPositionTickList)
         {
             Console.WriteLine("Asset: " + tick.asset + " Account: " + tick.account + " Exposure: " + tick.exposure + " TotalRisk: " + tick.totalrisk);
         }
-        foreach (ArthikaHFT.securityPositionTick tick in positionTickList2.securityPositionTickList)
+        foreach (AdharaHFT.securityPositionTick tick in positionTickList2.securityPositionTickList)
         {
             Console.WriteLine("Security: " + tick.security + " Account: " + tick.account + " Equity: " + tick.equity + " Exposure: " + tick.exposure + " Price: " + tick.price.ToString("F" + tick.pips) + " Pips: " + tick.pips);
         }

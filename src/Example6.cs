@@ -4,7 +4,7 @@ using System.IO;
 
 class Example6
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -24,7 +24,7 @@ class Example6
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -37,11 +37,11 @@ class Example6
         // ORDER POLLING
 
         // get tinterfaces
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
 
         Console.WriteLine("Starting Polling1");
-        List<ArthikaHFT.orderTick> orderTickList1 = wrapper.getOrder(new List<string> { "EUR/USD", "GBP/JPY", "GBP/USD" }, null, null);
-        foreach (ArthikaHFT.orderTick tick in orderTickList1)
+        List<AdharaHFT.orderTick> orderTickList1 = wrapper.getOrder(new List<string> { "EUR/USD", "GBP/JPY", "GBP/USD" }, null, null);
+        foreach (AdharaHFT.orderTick tick in orderTickList1)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.quantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
         }
@@ -55,8 +55,8 @@ class Example6
             tinterfacelist.Add(tinterfaceTickList[0].name);
             tinterfacelist.Add(tinterfaceTickList[1].name);
         }
-        List<ArthikaHFT.orderTick> orderTickList2 = wrapper.getOrder(null, tinterfacelist, null);
-        foreach (ArthikaHFT.orderTick tick in orderTickList2)
+        List<AdharaHFT.orderTick> orderTickList2 = wrapper.getOrder(null, tinterfacelist, null);
+        foreach (AdharaHFT.orderTick tick in orderTickList2)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.quantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
         }

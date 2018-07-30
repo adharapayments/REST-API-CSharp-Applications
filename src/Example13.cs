@@ -5,7 +5,7 @@ using System.Threading;
 
 class Example13
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -25,7 +25,7 @@ class Example13
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -38,7 +38,7 @@ class Example13
         // MULTIPLE ORDER CREATION
 
         // get tinterfaces
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
         string tinterface1 = tinterfaceTickList[0].name;
         string tinterface2;
         if (tinterfaceTickList.Count > 1)
@@ -50,57 +50,57 @@ class Example13
             tinterface2 = tinterfaceTickList[0].name;
         }
 
-        ArthikaHFT.orderRequest order1 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order1 = new AdharaHFT.orderRequest();
         order1.security = "EUR/USD";
         order1.tinterface = tinterface2;
         order1.quantity = 1000000;
-        order1.side = ArthikaHFT.SIDE_BUY;
-        order1.type = ArthikaHFT.TYPE_MARKET;
-        order1.timeinforce = ArthikaHFT.VALIDITY_DAY;
+        order1.side = AdharaHFT.SIDE_BUY;
+        order1.type = AdharaHFT.TYPE_MARKET;
+        order1.timeinforce = AdharaHFT.VALIDITY_DAY;
 
-        ArthikaHFT.orderRequest order2 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order2 = new AdharaHFT.orderRequest();
         order2.security = "EUR/USD";
         order2.tinterface = tinterface1;
         order2.quantity = 1000000;
-        order2.side = ArthikaHFT.SIDE_SELL;
-        order2.type = ArthikaHFT.TYPE_MARKET;
-        order2.timeinforce = ArthikaHFT.VALIDITY_DAY;
+        order2.side = AdharaHFT.SIDE_SELL;
+        order2.type = AdharaHFT.TYPE_MARKET;
+        order2.timeinforce = AdharaHFT.VALIDITY_DAY;
 
-        ArthikaHFT.orderRequest order3 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order3 = new AdharaHFT.orderRequest();
         order3.security = "EUR/USD";
         order3.tinterface = tinterface2;
         order3.quantity = 2000000;
-        order3.side = ArthikaHFT.SIDE_BUY;
-        order3.type = ArthikaHFT.TYPE_MARKET;
-        order3.timeinforce = ArthikaHFT.VALIDITY_DAY;
+        order3.side = AdharaHFT.SIDE_BUY;
+        order3.type = AdharaHFT.TYPE_MARKET;
+        order3.timeinforce = AdharaHFT.VALIDITY_DAY;
 
-        ArthikaHFT.orderRequest order4 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order4 = new AdharaHFT.orderRequest();
         order4.security = "EUR/USD";
         order4.tinterface = tinterface1;
         order4.quantity = 2000000;
-        order4.side = ArthikaHFT.SIDE_SELL;
-        order4.type = ArthikaHFT.TYPE_MARKET;
-        order4.timeinforce = ArthikaHFT.VALIDITY_DAY;
+        order4.side = AdharaHFT.SIDE_SELL;
+        order4.type = AdharaHFT.TYPE_MARKET;
+        order4.timeinforce = AdharaHFT.VALIDITY_DAY;
 
-        ArthikaHFT.orderRequest order5 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order5 = new AdharaHFT.orderRequest();
         order5.security = "EUR/USD";
         order5.tinterface = tinterface2;
         order5.quantity = 1000000;
-        order5.side = ArthikaHFT.SIDE_BUY;
-        order5.type = ArthikaHFT.TYPE_MARKET;
-        order5.timeinforce = ArthikaHFT.VALIDITY_DAY;
+        order5.side = AdharaHFT.SIDE_BUY;
+        order5.type = AdharaHFT.TYPE_MARKET;
+        order5.timeinforce = AdharaHFT.VALIDITY_DAY;
 
-        ArthikaHFT.orderRequest order6 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order6 = new AdharaHFT.orderRequest();
         order6.security = "EUR/USD";
         order6.tinterface = tinterface1;
         order6.quantity = 1000000;
-        order6.side = ArthikaHFT.SIDE_SELL;
-        order6.type = ArthikaHFT.TYPE_MARKET;
-        order6.timeinforce = ArthikaHFT.VALIDITY_DAY;
+        order6.side = AdharaHFT.SIDE_SELL;
+        order6.type = AdharaHFT.TYPE_MARKET;
+        order6.timeinforce = AdharaHFT.VALIDITY_DAY;
 
         Console.WriteLine("Starting Polling1");
-        List<ArthikaHFT.orderTick> orderTickList1 = wrapper.getOrder(new List<string> { "EUR/USD" }, null, null);
-        foreach (ArthikaHFT.orderTick tick in orderTickList1)
+        List<AdharaHFT.orderTick> orderTickList1 = wrapper.getOrder(new List<string> { "EUR/USD" }, null, null);
+        foreach (AdharaHFT.orderTick tick in orderTickList1)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.quantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
         }
@@ -108,18 +108,18 @@ class Example13
         Thread.Sleep(5000);
 
         Console.WriteLine("Sending order");
-        List<ArthikaHFT.orderRequest> orderList1 = wrapper.setOrder(new List<ArthikaHFT.orderRequest> { order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6 });
-        foreach (ArthikaHFT.orderRequest orderresponse in orderList1)
+        List<AdharaHFT.orderRequest> orderList1 = wrapper.setOrder(new List<AdharaHFT.orderRequest> { order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6 });
+        foreach (AdharaHFT.orderRequest orderresponse in orderList1)
         {
             Console.WriteLine("Id: " + orderresponse.tempid + " Security: " + orderresponse.security + " Side: " + orderresponse.side + " Quantity: " + orderresponse.quantity + " Price: " + orderresponse.price + " Type: " + orderresponse.type);
         }
-        List<ArthikaHFT.orderRequest> orderList2 = wrapper.setOrder(new List<ArthikaHFT.orderRequest> { order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6 });
-        foreach (ArthikaHFT.orderRequest orderresponse in orderList2)
+        List<AdharaHFT.orderRequest> orderList2 = wrapper.setOrder(new List<AdharaHFT.orderRequest> { order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6 });
+        foreach (AdharaHFT.orderRequest orderresponse in orderList2)
         {
             Console.WriteLine("Id: " + orderresponse.tempid + " Security: " + orderresponse.security + " Side: " + orderresponse.side + " Quantity: " + orderresponse.quantity + " Price: " + orderresponse.price + " Type: " + orderresponse.type);
         }
-        List<ArthikaHFT.orderRequest> orderList3 = wrapper.setOrder(new List<ArthikaHFT.orderRequest> { order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6 });
-        foreach (ArthikaHFT.orderRequest orderresponse in orderList3)
+        List<AdharaHFT.orderRequest> orderList3 = wrapper.setOrder(new List<AdharaHFT.orderRequest> { order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6, order1, order2, order3, order4, order5, order6 });
+        foreach (AdharaHFT.orderRequest orderresponse in orderList3)
         {
             Console.WriteLine("Id: " + orderresponse.tempid + " Security: " + orderresponse.security + " Side: " + orderresponse.side + " Quantity: " + orderresponse.quantity + " Price: " + orderresponse.price + " Type: " + orderresponse.type);
         }
@@ -127,8 +127,8 @@ class Example13
         Thread.Sleep(5000);
 
         Console.WriteLine("Starting Polling2");
-        List<ArthikaHFT.orderTick> orderTickList2 = wrapper.getOrder(new List<string> { "EUR/USD" }, null, null);
-        foreach (ArthikaHFT.orderTick tick in orderTickList2)
+        List<AdharaHFT.orderTick> orderTickList2 = wrapper.getOrder(new List<string> { "EUR/USD" }, null, null);
+        foreach (AdharaHFT.orderTick tick in orderTickList2)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.finishedquantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
         }

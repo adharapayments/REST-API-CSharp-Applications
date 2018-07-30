@@ -4,7 +4,7 @@ using System.IO;
 
 class Example2
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -24,7 +24,7 @@ class Example2
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -37,7 +37,7 @@ class Example2
         // PRICE POLLING
 
         // get tinterfaces
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
 
         Console.WriteLine("Starting Polling1");
         List<string> tinterfacelist = null;
@@ -46,16 +46,16 @@ class Example2
             tinterfacelist = new List<string>();
             tinterfacelist.Add(tinterfaceTickList[1].name);
         }
-        List<ArthikaHFT.priceTick> priceTickList1 = wrapper.getPrice(new List<string> { "EUR/USD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "GBP/USD", "USD/JPY" }, tinterfacelist, ArthikaHFT.GRANULARITY_TOB, 1);
-        foreach (ArthikaHFT.priceTick tick in priceTickList1)
+        List<AdharaHFT.priceTick> priceTickList1 = wrapper.getPrice(new List<string> { "EUR/USD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "GBP/USD", "USD/JPY" }, tinterfacelist, AdharaHFT.GRANULARITY_TOB, 1);
+        foreach (AdharaHFT.priceTick tick in priceTickList1)
         {
             Console.WriteLine("Security: " + tick.security + " Price: " + tick.price.ToString("F" + tick.pips) + " Side: " + tick.side + " TI: " + tick.tinterface + " Liquidity: " + tick.liquidity);
         }
         Console.WriteLine("Polling1 Finished");
 
         Console.WriteLine("Starting Polling2");
-        List<ArthikaHFT.priceTick> priceTickList2 = wrapper.getPrice(new List<string> { "EUR/USD" }, null, ArthikaHFT.GRANULARITY_FAB, 4);
-        foreach (ArthikaHFT.priceTick tick in priceTickList2)
+        List<AdharaHFT.priceTick> priceTickList2 = wrapper.getPrice(new List<string> { "EUR/USD" }, null, AdharaHFT.GRANULARITY_FAB, 4);
+        foreach (AdharaHFT.priceTick tick in priceTickList2)
         {
             Console.WriteLine("Security: " + tick.security + " Price: " + tick.price.ToString("F" + tick.pips) + " Side: " + tick.side + " TI: " + tick.tinterface + " Liquidity: " + tick.liquidity);
         }

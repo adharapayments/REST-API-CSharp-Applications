@@ -4,54 +4,54 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 
-class ArthikaHFTListenerImp1 : ArthikaHFTListener
+class AdharaHFTListenerImp1 : AdharaHFTListener
 {
 
-    void ArthikaHFTListener.timestampEvent(string timestamp)
+    void AdharaHFTListener.timestampEvent(string timestamp)
     {
         //Console.WriteLine("Response timestamp: " + timestamp + " Contents:");
     }
 
-    void ArthikaHFTListener.heartbeatEvent()
+    void AdharaHFTListener.heartbeatEvent()
     {
         Console.WriteLine("Heartbeat!");
     }
 
-    void ArthikaHFTListener.messageEvent(string message)
+    void AdharaHFTListener.messageEvent(string message)
     {
         Console.WriteLine("Message from server: " + message);
     }
 
-    void ArthikaHFTListener.priceEvent(List<ArthikaHFT.priceTick> priceTickList)
+    void AdharaHFTListener.priceEvent(List<AdharaHFT.priceTick> priceTickList)
     {
-        foreach (ArthikaHFT.priceTick tick in priceTickList)
+        foreach (AdharaHFT.priceTick tick in priceTickList)
         {
             Console.WriteLine("Security: " + tick.security + " Price: " + tick.price.ToString("F" + tick.pips) + " Side: " + tick.side + " TI: " + tick.tinterface + " Liquidity: " + tick.liquidity);
         }
     }
 
-    void ArthikaHFTListener.accountingEvent(ArthikaHFT.accountingTick accountingTick)
+    void AdharaHFTListener.accountingEvent(AdharaHFT.accountingTick accountingTick)
     {
         Console.WriteLine("StrategyPL: " + accountingTick.strategyPL + " TotalEquity: " + accountingTick.totalequity + " UsedMargin: " + accountingTick.usedmargin + " FreeMargin: " + accountingTick.freemargin);
     }
 
-    void ArthikaHFTListener.assetPositionEvent(List<ArthikaHFT.assetPositionTick> assetPositionTickList)
+    void AdharaHFTListener.assetPositionEvent(List<AdharaHFT.assetPositionTick> assetPositionTickList)
     {
-        foreach (ArthikaHFT.assetPositionTick tick in assetPositionTickList)
+        foreach (AdharaHFT.assetPositionTick tick in assetPositionTickList)
         {
             Console.WriteLine("Asset: " + tick.asset + " Account: " + tick.account + " Exposure: " + tick.exposure + " TotalRisk: " + tick.totalrisk);
         }
     }
 
-    void ArthikaHFTListener.securityPositionEvent(List<ArthikaHFT.securityPositionTick> securityPositionTickList)
+    void AdharaHFTListener.securityPositionEvent(List<AdharaHFT.securityPositionTick> securityPositionTickList)
     {
-        foreach (ArthikaHFT.securityPositionTick tick in securityPositionTickList)
+        foreach (AdharaHFT.securityPositionTick tick in securityPositionTickList)
         {
             Console.WriteLine("Security: " + tick.security + " Account: " + tick.account + " Equity: " + tick.equity + " Exposure: " + tick.exposure + " Price: " + tick.price + " Pips: " + tick.pips);
         }
     }
 
-    void ArthikaHFTListener.positionHeartbeatEvent(ArthikaHFT.positionHeartbeat positionHeartbeatList)
+    void AdharaHFTListener.positionHeartbeatEvent(AdharaHFT.positionHeartbeat positionHeartbeatList)
     {
         Console.Write("Asset: ");
         for (int i = 0; i < positionHeartbeatList.asset.Count; i++)
@@ -83,15 +83,15 @@ class ArthikaHFTListenerImp1 : ArthikaHFTListener
         Console.WriteLine();
     }
 
-    void ArthikaHFTListener.orderEvent(List<ArthikaHFT.orderTick> orderTickList)
+    void AdharaHFTListener.orderEvent(List<AdharaHFT.orderTick> orderTickList)
     {
-        foreach (ArthikaHFT.orderTick tick in orderTickList)
+        foreach (AdharaHFT.orderTick tick in orderTickList)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.quantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
         }
     }
 
-    void ArthikaHFTListener.orderHeartbeatEvent(ArthikaHFT.orderHeartbeat orderHeartbeat)
+    void AdharaHFTListener.orderHeartbeatEvent(AdharaHFT.orderHeartbeat orderHeartbeat)
     {
         Console.Write("Security: ");
         for (int i = 0; i < orderHeartbeat.security.Count; i++)
@@ -117,8 +117,8 @@ class ArthikaHFTListenerImp1 : ArthikaHFTListener
 
 class Example1
 {
-    private static ArthikaHFT wrapper;
-    private static bool ssl = true;
+    private static AdharaHFT wrapper;
+    private static bool ssl = false;
     private static string domain;
     private static string url_stream;
     private static string url_polling;
@@ -137,7 +137,7 @@ class Example1
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -150,10 +150,10 @@ class Example1
         // PRICE STREAMING
 
         // get tinterfaces
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
 
         // Open first price streaming for one security in all tinterfaces
-        string id1 = wrapper.getPriceBegin(new List<string> { "GBP/USD" }, null, ArthikaHFT.GRANULARITY_TOB, 1, interval, new ArthikaHFTListenerImp1());
+        string id1 = wrapper.getPriceBegin(new List<string> { "GBP/USD" }, null, AdharaHFT.GRANULARITY_TOB, 1, interval, new AdharaHFTListenerImp1());
         Thread.Sleep(5000);
 
         // Open second price streaming for two securities in the two first tinterfaces
@@ -164,7 +164,7 @@ class Example1
             tinterfacelist.Add(tinterfaceTickList.ElementAt(0).name);
             tinterfacelist.Add(tinterfaceTickList.ElementAt(1).name);
         }
-        string id2 = wrapper.getPriceBegin(new List<string> { "EUR/USD", "GBP/JPY" }, tinterfacelist, ArthikaHFT.GRANULARITY_FAB, 2, interval, new ArthikaHFTListenerImp1());
+        string id2 = wrapper.getPriceBegin(new List<string> { "EUR/USD", "GBP/JPY" }, tinterfacelist, AdharaHFT.GRANULARITY_FAB, 2, interval, new AdharaHFTListenerImp1());
         Thread.Sleep(5000);
 
         // Close second price streaming
@@ -181,7 +181,7 @@ class Example1
             tinterfacelist = new List<string>();
             tinterfacelist.Add(tinterfaceTickList.ElementAt(0).name);
         }
-        string id3 = wrapper.getPriceBegin(new List<string> { "EUR/USD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "GBP/USD", "USD/JPY" }, tinterfacelist, ArthikaHFT.GRANULARITY_TOB, 1, interval, new ArthikaHFTListenerImp1());
+        string id3 = wrapper.getPriceBegin(new List<string> { "EUR/USD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "GBP/USD", "USD/JPY" }, tinterfacelist, AdharaHFT.GRANULARITY_TOB, 1, interval, new AdharaHFTListenerImp1());
         Thread.Sleep(5000);
 
         // Close third price streaming

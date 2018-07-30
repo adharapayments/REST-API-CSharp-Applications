@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\ArthikaHFT.cs" />
+    <Compile Include="src\AdharaHFT.cs" />
     <Compile Include="src\Example13.cs" />
     <Compile Include="src\Example14.cs" />
     <Compile Include="src\Example12.cs" />

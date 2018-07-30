@@ -11,21 +11,21 @@ using System.Web.Script.Serialization;
 
 // Note: To enable JSON (JavaScriptSerializer) add following reference: System.Web.Extensions
 
-public interface ArthikaHFTListener
+public interface AdharaHFTListener
 {
     void timestampEvent(string timestamp);
     void heartbeatEvent();
     void messageEvent(string message);
-    void priceEvent(List<ArthikaHFT.priceTick> priceTickList);
-    void accountingEvent(ArthikaHFT.accountingTick accountingTick);
-    void assetPositionEvent(List<ArthikaHFT.assetPositionTick> assetPositionTickList);
-    void securityPositionEvent(List<ArthikaHFT.securityPositionTick> securityPositionTickList);
-    void positionHeartbeatEvent(ArthikaHFT.positionHeartbeat positionHeartbeat);
-    void orderEvent(List<ArthikaHFT.orderTick> orderTickList);
-    void orderHeartbeatEvent(ArthikaHFT.orderHeartbeat orderHeartbeat);
+    void priceEvent(List<AdharaHFT.priceTick> priceTickList);
+    void accountingEvent(AdharaHFT.accountingTick accountingTick);
+    void assetPositionEvent(List<AdharaHFT.assetPositionTick> assetPositionTickList);
+    void securityPositionEvent(List<AdharaHFT.securityPositionTick> securityPositionTickList);
+    void positionHeartbeatEvent(AdharaHFT.positionHeartbeat positionHeartbeat);
+    void orderEvent(List<AdharaHFT.orderTick> orderTickList);
+    void orderHeartbeatEvent(AdharaHFT.orderHeartbeat orderHeartbeat);
 }
 
-public class ArthikaHFT
+public class AdharaHFT
 {
 
     private bool ssl;
@@ -524,7 +524,7 @@ public class ArthikaHFT
     }
 
     
-    public ArthikaHFT(string domain, string url_stream, string url_polling, string url_challenge, string url_token, string user, string password, string authentication_port, string request_port, bool ssl, string ssl_cert)
+    public AdharaHFT(string domain, string url_stream, string url_polling, string url_challenge, string url_token, string user, string password, string authentication_port, string request_port, bool ssl, string ssl_cert)
     {
         this.domain = domain;
 		this.url_stream = url_stream;
@@ -674,7 +674,7 @@ public class ArthikaHFT
 		return (List<priceTick>) res;
 	}
 
-    public string getPriceBegin(List<string> securities, List<string> tinterfaces, string granularity, int levels, int interval, ArthikaHFTListener listener)
+    public string getPriceBegin(List<string> securities, List<string> tinterfaces, string granularity, int levels, int interval, AdharaHFTListener listener)
     {
 		hftRequest hftrequest = new hftRequest();
 		hftrequest.getPrice = new getPriceRequest(user, token, securities, tinterfaces, granularity, levels, interval);
@@ -694,7 +694,7 @@ public class ArthikaHFT
 		return (positionTick) res;
 	}
 
-    public string getPositionBegin(List<string> assets, List<string> securities, List<string> accounts, int interval, ArthikaHFTListener listener)
+    public string getPositionBegin(List<string> assets, List<string> securities, List<string> accounts, int interval, AdharaHFTListener listener)
     {
         hftRequest hftrequest = new hftRequest();
         hftrequest.getPosition = new getPositionRequest(user, token, assets, securities, accounts, interval);
@@ -715,7 +715,7 @@ public class ArthikaHFT
         return (List<orderTick>)res;
     }
 
-    public string getOrderBegin(List<string> securities, List<string> tinterfaces, List<string> types, int interval, ArthikaHFTListener listener)
+    public string getOrderBegin(List<string> securities, List<string> tinterfaces, List<string> types, int interval, AdharaHFTListener listener)
     {
         hftRequest hftrequest = new hftRequest();
         hftrequest.getOrder = new getOrderRequest(user, token, securities, tinterfaces, types, interval);
@@ -760,7 +760,7 @@ public class ArthikaHFT
         return (List<candleTick>) res;
     }
 
-    private Object sendRequest(hftRequest hftrequest, string urlpath, bool stream, ArthikaHFTListener listener)
+    private Object sendRequest(hftRequest hftrequest, string urlpath, bool stream, AdharaHFTListener listener)
     {
         if (token == null)
         {
@@ -827,7 +827,7 @@ public class ArthikaHFT
         }
     }
 
-    private Object handleResponse(StreamReader streamReader, bool stream, ArthikaHFTListener listener)
+    private Object handleResponse(StreamReader streamReader, bool stream, AdharaHFTListener listener)
     {
         try
         {

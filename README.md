@@ -30,7 +30,7 @@ The repository contains the wrapper and all the examples listed above together w
 **2. Modify config.properties file with your settings** 
 
 ```
-domain=http://demo.arthikatrading.com
+domain=http://actfx.adhara.io
 user=demo
 password=demo
 ```
@@ -39,7 +39,7 @@ password=demo
 
 From here on we will assume it is Example1.cs.
 ```
-string id1 = wrapper.getPriceBegin(new List<string> { "GBP/USD" }, null, ArthikaHFT.GRANULARITY_TOB, 1, interval, new ArthikaHFTListenerImp1());
+string id1 = wrapper.getPriceBegin(new List<string> { "GBP/USD" }, null, AdharaHFT.GRANULARITY_TOB, 1, interval, new AdharaHFTListenerImp1());
 ```
 
 In case you want to disable ssl protocol, change the following line:

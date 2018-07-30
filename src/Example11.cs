@@ -4,56 +4,56 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 
-class ArthikaHFTListenerImp11 : ArthikaHFTListener
+class AdharaHFTListenerImp11 : AdharaHFTListener
 {
 
     public Dictionary<int, String> fixidDictionary = new Dictionary<int, String>();
 
-    void ArthikaHFTListener.timestampEvent(string timestamp)
+    void AdharaHFTListener.timestampEvent(string timestamp)
     {
         //Console.WriteLine("Response timestamp: " + timestamp + " Contents:");
     }
 
-    void ArthikaHFTListener.heartbeatEvent()
+    void AdharaHFTListener.heartbeatEvent()
     {
         Console.WriteLine("Heartbeat!");
     }
 
-    void ArthikaHFTListener.messageEvent(string message)
+    void AdharaHFTListener.messageEvent(string message)
     {
         Console.WriteLine("Message from server: " + message);
     }
 
-    void ArthikaHFTListener.priceEvent(List<ArthikaHFT.priceTick> priceTickList)
+    void AdharaHFTListener.priceEvent(List<AdharaHFT.priceTick> priceTickList)
     {
-        foreach (ArthikaHFT.priceTick tick in priceTickList)
+        foreach (AdharaHFT.priceTick tick in priceTickList)
         {
             Console.WriteLine("Security: " + tick.security + " Price: " + tick.price.ToString("F" + tick.pips) + " Side: " + tick.side + " TI: " + tick.tinterface + " Liquidity: " + tick.liquidity);
         }
     }
 
-    void ArthikaHFTListener.accountingEvent(ArthikaHFT.accountingTick accountingTick)
+    void AdharaHFTListener.accountingEvent(AdharaHFT.accountingTick accountingTick)
     {
         Console.WriteLine("StrategyPL: " + accountingTick.strategyPL + " TotalEquity: " + accountingTick.totalequity + " UsedMargin: " + accountingTick.usedmargin + " FreeMargin: " + accountingTick.freemargin);
     }
 
-    void ArthikaHFTListener.assetPositionEvent(List<ArthikaHFT.assetPositionTick> assetPositionTickList)
+    void AdharaHFTListener.assetPositionEvent(List<AdharaHFT.assetPositionTick> assetPositionTickList)
     {
-        foreach (ArthikaHFT.assetPositionTick tick in assetPositionTickList)
+        foreach (AdharaHFT.assetPositionTick tick in assetPositionTickList)
         {
             Console.WriteLine("Asset: " + tick.asset + " Account: " + tick.account + " Exposure: " + tick.exposure + " TotalRisk: " + tick.totalrisk);
         }
     }
 
-    void ArthikaHFTListener.securityPositionEvent(List<ArthikaHFT.securityPositionTick> securityPositionTickList)
+    void AdharaHFTListener.securityPositionEvent(List<AdharaHFT.securityPositionTick> securityPositionTickList)
     {
-        foreach (ArthikaHFT.securityPositionTick tick in securityPositionTickList)
+        foreach (AdharaHFT.securityPositionTick tick in securityPositionTickList)
         {
             Console.WriteLine("Security: " + tick.security + " Account: " + tick.account + " Equity: " + tick.equity + " Exposure: " + tick.exposure + " Price: " + tick.price + " Pips: " + tick.pips);
         }
     }
 
-    void ArthikaHFTListener.positionHeartbeatEvent(ArthikaHFT.positionHeartbeat positionHeartbeatList)
+    void AdharaHFTListener.positionHeartbeatEvent(AdharaHFT.positionHeartbeat positionHeartbeatList)
     {
         Console.Write("Asset: ");
         for (int i = 0; i < positionHeartbeatList.asset.Count; i++)
@@ -85,16 +85,16 @@ class ArthikaHFTListenerImp11 : ArthikaHFTListener
         Console.WriteLine();
     }
 
-    void ArthikaHFTListener.orderEvent(List<ArthikaHFT.orderTick> orderTickList)
+    void AdharaHFTListener.orderEvent(List<AdharaHFT.orderTick> orderTickList)
     {
-        foreach (ArthikaHFT.orderTick tick in orderTickList)
+        foreach (AdharaHFT.orderTick tick in orderTickList)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.quantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
             fixidDictionary[tick.tempid] = tick.fixid;
         }
     }
 
-    void ArthikaHFTListener.orderHeartbeatEvent(ArthikaHFT.orderHeartbeat orderHeartbeat)
+    void AdharaHFTListener.orderHeartbeatEvent(AdharaHFT.orderHeartbeat orderHeartbeat)
     {
         Console.Write("Security: ");
         for (int i = 0; i < orderHeartbeat.security.Count; i++)
@@ -120,7 +120,7 @@ class ArthikaHFTListenerImp11 : ArthikaHFTListener
 
 class Example11
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -140,7 +140,7 @@ class Example11
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -153,34 +153,34 @@ class Example11
         // MODIFY PENDING ORDER WITH ORDER STREAMING
 
         // get tinterfaces
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
         string tinterface1 = tinterfaceTickList[0].name;
 
         // Open order streaming
-        ArthikaHFTListenerImp10 listener = new ArthikaHFTListenerImp10();
+        AdharaHFTListenerImp10 listener = new AdharaHFTListenerImp10();
         string id1 = wrapper.getOrderBegin(null, null, null, interval, listener);
         Thread.Sleep(5000);
 
         // get current price
         double price = 0.0;
-        List<ArthikaHFT.priceTick> priceTickList1 = wrapper.getPrice(new List<string> { "EUR/USD" }, new List<string> { tinterface1 }, ArthikaHFT.GRANULARITY_TOB, 1);
-        foreach (ArthikaHFT.priceTick tick in priceTickList1)
+        List<AdharaHFT.priceTick> priceTickList1 = wrapper.getPrice(new List<string> { "EUR/USD" }, new List<string> { tinterface1 }, AdharaHFT.GRANULARITY_TOB, 1);
+        foreach (AdharaHFT.priceTick tick in priceTickList1)
         {
             price = tick.price;
         }
 
         // Create pending order. If buy, order price must be lower than current price
-        ArthikaHFT.orderRequest order1 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order1 = new AdharaHFT.orderRequest();
         order1.security = "EUR/USD";
         order1.tinterface = tinterface1;
         order1.quantity = 500000;
-        order1.side = ArthikaHFT.SIDE_BUY;
-        order1.type = ArthikaHFT.TYPE_LIMIT;
-        order1.timeinforce = ArthikaHFT.VALIDITY_DAY;
+        order1.side = AdharaHFT.SIDE_BUY;
+        order1.type = AdharaHFT.TYPE_LIMIT;
+        order1.timeinforce = AdharaHFT.VALIDITY_DAY;
         order1.price = price - 0.01;
-        List<ArthikaHFT.orderRequest> orderList = wrapper.setOrder(new List<ArthikaHFT.orderRequest> { order1 });
+        List<AdharaHFT.orderRequest> orderList = wrapper.setOrder(new List<AdharaHFT.orderRequest> { order1 });
         int tempid = -1;
-        foreach (ArthikaHFT.orderRequest orderresponse in orderList)
+        foreach (AdharaHFT.orderRequest orderresponse in orderList)
         {
             Console.WriteLine("Id: " + orderresponse.tempid + " Security: " + orderresponse.security + " Side: " + orderresponse.side + " Quantity: " + orderresponse.quantity + " Price: " + orderresponse.price + " Type: " + orderresponse.type);
             tempid = orderresponse.tempid;
@@ -189,12 +189,12 @@ class Example11
 
         // Modify pending order
         Console.WriteLine("Modify order");
-        ArthikaHFT.modOrder ordermod = new ArthikaHFT.modOrder();
+        AdharaHFT.modOrder ordermod = new AdharaHFT.modOrder();
         ordermod.fixid = listener.fixidDictionary[tempid];
         ordermod.price = price - 0.015;
         ordermod.quantity = 200000;
-        List<ArthikaHFT.modifyTick> modifyList = wrapper.modifyOrder(new List<ArthikaHFT.modOrder> { ordermod });
-        foreach (ArthikaHFT.modifyTick modifyresponse in modifyList)
+        List<AdharaHFT.modifyTick> modifyList = wrapper.modifyOrder(new List<AdharaHFT.modOrder> { ordermod });
+        foreach (AdharaHFT.modifyTick modifyresponse in modifyList)
         {
             Console.WriteLine("FixId: " + modifyresponse.fixid + " Result: " + modifyresponse.result);
         }

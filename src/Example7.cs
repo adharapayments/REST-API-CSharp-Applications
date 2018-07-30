@@ -5,7 +5,7 @@ using System.Threading;
 
 class Example7
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -25,7 +25,7 @@ class Example7
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -38,7 +38,7 @@ class Example7
         // ORDER CREATION
 
         // get tinterfaces
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
 
         string tinterface;
         if (tinterfaceTickList.Count > 1)
@@ -50,16 +50,16 @@ class Example7
             tinterface = tinterfaceTickList[0].name;
         }
 
-        ArthikaHFT.orderRequest order1 = new ArthikaHFT.orderRequest();
+        AdharaHFT.orderRequest order1 = new AdharaHFT.orderRequest();
         order1.security = "EUR/USD";
         order1.tinterface = tinterface;
         order1.quantity = 500000;
-        order1.side = ArthikaHFT.SIDE_BUY;
-        order1.type = ArthikaHFT.TYPE_MARKET;
+        order1.side = AdharaHFT.SIDE_BUY;
+        order1.type = AdharaHFT.TYPE_MARKET;
 
         Console.WriteLine("Starting Polling1");
-        List<ArthikaHFT.orderTick> orderTickList1 = wrapper.getOrder(new List<string> { "EUR/USD" }, new List<string> { tinterface }, null);
-        foreach (ArthikaHFT.orderTick tick in orderTickList1)
+        List<AdharaHFT.orderTick> orderTickList1 = wrapper.getOrder(new List<string> { "EUR/USD" }, new List<string> { tinterface }, null);
+        foreach (AdharaHFT.orderTick tick in orderTickList1)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.quantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
         }
@@ -67,8 +67,8 @@ class Example7
         Thread.Sleep(2000);
 
         Console.WriteLine("Sending order");
-        List<ArthikaHFT.orderRequest> orderList = wrapper.setOrder(new List<ArthikaHFT.orderRequest> { order1 });
-        foreach (ArthikaHFT.orderRequest orderresponse in orderList)
+        List<AdharaHFT.orderRequest> orderList = wrapper.setOrder(new List<AdharaHFT.orderRequest> { order1 });
+        foreach (AdharaHFT.orderRequest orderresponse in orderList)
         {
             Console.WriteLine("Id: " + orderresponse.tempid + " Security: " + orderresponse.security + " Side: " + orderresponse.side + " Quantity: " + orderresponse.quantity + " Price: " + orderresponse.price + " Type: " + orderresponse.type);
         }
@@ -76,8 +76,8 @@ class Example7
         Thread.Sleep(2000);
 
         Console.WriteLine("Starting Polling2");
-        List<ArthikaHFT.orderTick> orderTickList2 = wrapper.getOrder(new List<string> { "EUR/USD" }, new List<string> { tinterface }, null);
-        foreach (ArthikaHFT.orderTick tick in orderTickList2)
+        List<AdharaHFT.orderTick> orderTickList2 = wrapper.getOrder(new List<string> { "EUR/USD" }, new List<string> { tinterface }, null);
+        foreach (AdharaHFT.orderTick tick in orderTickList2)
         {
             Console.WriteLine("TempId: " + tick.tempid + " OrderId: " + tick.orderid + " Security: " + tick.security + " Account: " + tick.account + " Quantity: " + tick.quantity + " Type: " + tick.type + " Side: " + tick.side + " Status: " + tick.status);
         }

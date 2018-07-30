@@ -4,7 +4,7 @@ using System.IO;
 
 class Example14
 {
-    private static ArthikaHFT wrapper;
+    private static AdharaHFT wrapper;
     private static bool ssl = true;
     private static string domain;
     private static string url_stream;
@@ -24,7 +24,7 @@ class Example14
         // get properties from file
         getProperties();
 
-        wrapper = new ArthikaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
+        wrapper = new AdharaHFT(domain, url_stream, url_polling, url_challenge, url_token, user, password, authentication_port, request_port, ssl, ssl_cert);
 
         bool auth = wrapper.doAuthentication();
         if (!auth)
@@ -37,7 +37,7 @@ class Example14
         // HISTORICAL PRICE POLLING
 
         // get tinterfaces
-        List<ArthikaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
+        List<AdharaHFT.tinterfaceTick> tinterfaceTickList = wrapper.getInterface();
 
         Console.WriteLine("Starting Candle list 1");
         List<String> tinterfacelist = null;
@@ -46,16 +46,16 @@ class Example14
             tinterfacelist = new List<string>();
             tinterfacelist.Add(tinterfaceTickList[1].name);
         }
-        List<ArthikaHFT.candleTick> candleTickList1 = wrapper.getHistoricalPrice(new List<string> { "EUR/USD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "GBP/USD", "USD/JPY" }, tinterfacelist, ArthikaHFT.CANDLE_GRANULARITY_10MINUTES, ArthikaHFT.SIDE_ASK, 5);
-        foreach (ArthikaHFT.candleTick tick in candleTickList1)
+        List<AdharaHFT.candleTick> candleTickList1 = wrapper.getHistoricalPrice(new List<string> { "EUR/USD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "GBP/USD", "USD/JPY" }, tinterfacelist, AdharaHFT.CANDLE_GRANULARITY_10MINUTES, AdharaHFT.SIDE_ASK, 5);
+        foreach (AdharaHFT.candleTick tick in candleTickList1)
         {
             Console.WriteLine("Security: " + tick.security + " tinterface: " + tick.tinterface + " TimeStamp: " + tick.timestamp + " Side: " + tick.side + " Open: " + tick.open + " High: " + tick.high + " Low: " + tick.low + " Close: " + tick.close + " Ticks: " + tick.ticks);
         }
         Console.WriteLine("Candle list 1 Finished");
 
         Console.WriteLine("Starting Candle list 2");
-        List<ArthikaHFT.candleTick> candleTickList2 = wrapper.getHistoricalPrice(new List<string> { "EUR/USD" }, null, ArthikaHFT.CANDLE_GRANULARITY_30MINUTES, ArthikaHFT.SIDE_BID, 3);
-        foreach (ArthikaHFT.candleTick tick in candleTickList2)
+        List<AdharaHFT.candleTick> candleTickList2 = wrapper.getHistoricalPrice(new List<string> { "EUR/USD" }, null, AdharaHFT.CANDLE_GRANULARITY_30MINUTES, AdharaHFT.SIDE_BID, 3);
+        foreach (AdharaHFT.candleTick tick in candleTickList2)
         {
             Console.WriteLine("Security: " + tick.security + " tinterface: " + tick.tinterface + " TimeStamp: " + tick.timestamp + " Side: " + tick.side + " Open: " + tick.open + " High: " + tick.high + " Low: " + tick.low + " Close: " + tick.close + " Ticks: " + tick.ticks);
         }
